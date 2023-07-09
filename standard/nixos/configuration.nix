@@ -63,25 +63,86 @@
   # FIXME: Add the rest of your current configuration
 
   # TODO: Set your hostname
-  networking.hostName = "your-hostname";
+  networking.hostName = "avell-nixos";
 
   # TODO: This is just an example, be sure to use whatever bootloader you prefer
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable false;= true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  #Set Kernel
+  boot.kernelPackages = pkgs.linuxPackages_6_4;
+    # Enable networking
+  networking.networkmanager.enable = true;
+  
+  # Set your time zone.
+  time.timeZone = "America/Porto_Velho";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "pt_BR.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "pt_BR.UTF-8";
+    LC_IDENTIFICATION = "pt_BR.UTF-8";
+    LC_MEASUREMENT = "pt_BR.UTF-8";
+    LC_MONETARY = "pt_BR.UTF-8";
+    LC_NAME = "pt_BR.UTF-8";
+    LC_NUMERIC = "pt_BR.UTF-8";
+    LC_PAPER = "pt_BR.UTF-8";
+    LC_TELEPHONE = "pt_BR.UTF-8";
+    LC_TIME = "pt_BR.UTF-8";
+  };
+  console.keyMap = "br-abnt2";
+
+    # Enable sound with pipewire.
+  sound.enable = true;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by defaul
+,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
+   hardware.opengl = {
+        enable = true;
+        driSupport = true;
+        driSupport32Bit = true;
+        };
+ hardware.nvidia = {
+        modesetting.enable = true;
+        open = false;
+        nvidiaSettings = true;
+        powerManagement.enable = true;
+        package = config.boot.kernelPackages.nvidiaPackages.production;
+        };
+ hardware.nvidia.prime = {
+        offload = {
+                enable =true;
+                enableOffloadCmd = true;
+                };
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:1:0:0";
+        };
 
   # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
   users.users = {
     # FIXME: Replace with your username
-    your-username = {
+    jfabio = {
       # TODO: You can set an initial password for your user.
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
       # Be sure to change it (using passwd) after rebooting!
-      initialPassword = "correcthorsebatterystaple";
       isNormalUser = true;
       openssh.authorizedKeys.keys = [
         # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
       ];
       # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "wheel" "networkmanager" ];
     };
   };
 
@@ -92,7 +153,7 @@
     # Forbid root login through SSH.
     permitRootLogin = "no";
     # Use keys only. Remove if you want to SSH using password (not recommended)
-    passwordAuthentication = false;
+    passwordAuthentication = true;
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
