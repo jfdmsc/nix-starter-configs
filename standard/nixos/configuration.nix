@@ -66,7 +66,7 @@
   networking.hostName = "avell-nixos";
 
   # TODO: This is just an example, be sure to use whatever bootloader you prefer
-  boot.loader.systemd-boot.enable false;= true;
+  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   #Set Kernel
   boot.kernelPackages = pkgs.linuxPackages_6_4;
