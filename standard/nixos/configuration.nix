@@ -147,7 +147,7 @@
 
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
-  services.openssh = {
+  services.openssh.settings = {
     enable = true;
     # Forbid root login through SSH.
     permitRootLogin = "no";
@@ -156,5 +156,5 @@
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.05";
+  system.stateVersion = "23.11";
 }
