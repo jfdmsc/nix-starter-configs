@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ inputs, outputs, lib, config, pkgs, ... }: {
   imports = [];
   nixpkgs = {
     config = {
@@ -8,7 +8,7 @@
    };
   home = {
     username = "jfabio";
-    home.homeDirectory = "/home/jfabio";
+    homeDirectory = "/home/jfabio";
     };
   home.packages = with pkgs; [
   htop
