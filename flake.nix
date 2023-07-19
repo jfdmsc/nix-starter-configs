@@ -16,6 +16,12 @@
         '';
         path = ./standard;
       };
+      flakes= {
+        description = ''
+        Initial test flake, helping with my learning curve.
+        '';
+        path = ./flakes;
+      };
     };
   };
 }
