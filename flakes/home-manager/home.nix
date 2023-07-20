@@ -11,9 +11,12 @@
     homeDirectory = "/home/jfabio";
     };
   home.packages = with pkgs; [
+  neovim
+  kitty
+  tmux
+  starship
   htop
   ];
-
 
   programs.home-manager.enable = true;
   programs.git.enable = true;
